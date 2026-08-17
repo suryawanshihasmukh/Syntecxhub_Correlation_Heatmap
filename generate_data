@@ -1,1 +1,25 @@
+import pandas as pd
+import numpy as np
+
+np.random.seed(42)
+n = 300
+
+price = np.random.uniform(10, 500, n)
+quantity = np.random.randint(1, 50, n)
+discount = np.random.uniform(0, 0.5, n)
+sales = price * quantity * (1 - discount) + np.random.normal(0, 50, n)
+profit = sales * np.random.uniform(0.1, 0.4, n) - discount * 100 + np.random.normal(0, 20, n)
+rating = np.clip(5 - discount * 3 + np.random.normal(0, 0.5, n), 1, 5)
+
+df = pd.DataFrame({
+    "Price": price.round(2),
+    "Quantity": quantity,
+    "Discount": discount.round(2),
+    "Sales": sales.round(2),
+    "Profit": profit.round(2),
+    "CustomerRating": rating.round(2)
+})
+
+df.to_csv("sales_data.csv", index=False)
+print("Dataset created:", df.shape)
 
